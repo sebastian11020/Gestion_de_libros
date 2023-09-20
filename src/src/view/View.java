@@ -50,18 +50,18 @@ public class View {
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
         frame.revalidate();
         agregarAutor.addActionListener(e->{
-            if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())){
-                if(!esNuloOVacio(datoTitulo.getText())&&!esNuloOVacio(datoEditorial.getText())){
+            if(!esNuloOVacio(datoTitulo.getText())&&!esNuloOVacio(datoEditorial.getText())){
+               if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())){
                 getTitulo(datoTitulo.getText());
                 getCodigo(datoCodigo.getText());
                 getVolumen(datoVolumen.getText());
                 getEditorial(datoEditorial.getText());
                 agregarAutorySede();
                 }else {
-                    JOptionPane.showMessageDialog(null,"No pueden haber campos vacios");
+                    JOptionPane.showMessageDialog(null,"El codigo o el volumen no son validos");
                 }
             }else {
-                JOptionPane.showMessageDialog(null,"El codigo o el volumen no es un dato valido");
+                JOptionPane.showMessageDialog(null,"No pueden haber campos vacios");
             }
         });
         frame.repaint();
