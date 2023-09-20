@@ -20,6 +20,7 @@ public class View {
         JLabel titulo = new JLabel("Sistema gestor de libros");
         JPanel panelTitulo = new JPanel();
         frame.setSize(400, 400);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panelTitulo.add(titulo);
         panelMenu.add(crear);
@@ -68,11 +69,15 @@ public class View {
         agregarAutor.addActionListener(e->{
             if(!esNuloOVacio(datoTitulo.getText())&&!esNuloOVacio(datoEditorial.getText())){
                if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())){
-                getTitulo(datoTitulo.getText());
-                getCodigo(datoCodigo.getText());
-                getVolumen(datoVolumen.getText());
-                getEditorial(datoEditorial.getText());
-                agregarAutorySede();
+                setTituloLibro(datoTitulo.getText());
+                if(Integer.parseInt(datoCodigo.getText())>0 && Integer.parseInt(datoVolumen.getText())>0) {
+                    setCodigo(datoCodigo.getText());
+                    setVolumen(datoVolumen.getText());
+                    setEditorial(datoEditorial.getText());
+                    agregarAutorySede();
+                }else {
+                    JOptionPane.showMessageDialog(null,"El codigo o el volumen no puede ser menor a 0");
+                }
                 }else {
                     JOptionPane.showMessageDialog(null,"El codigo o el volumen no son validos");
                 }
@@ -164,11 +169,11 @@ public class View {
             if (!esNuloOVacio(datoNombre.getText()) && !esNuloOVacio(datoApellido.getText())
                     && !esNuloOVacio(textArea.getText()) && !esNuloOVacio(selectedSede)
                     && !esNuloOVacio(selectedFacu[0])) {
-                getNombre(datoNombre.getText());
-                getApellido(datoApellido.getText());
-                getBio(textArea.getText());
-                getSede(selectedSede);
-                getFacu(selectedFacu[0]);
+                setNombre(datoNombre.getText());
+                setApellido(datoApellido.getText());
+                setBio(textArea.getText());
+                setSede(selectedSede);
+                setFacultad(selectedFacu[0]);
             }else {
                 JOptionPane.showMessageDialog(null,"No pueden haber campos vacios o sin seleccionar");
             }
@@ -176,38 +181,63 @@ public class View {
         frame.repaint();
     }
 
-    public String getTitulo(String titulo){
-        return this.titulo_libro=titulo;
+    public void setTituloLibro(String titulo){
+        this.titulo_libro=titulo;
     }
-
-    public int getCodigo(String codigo){
+    public String getTitulo(){
+        return this.titulo_libro;
+    }
+    public void setCodigo(String codigo){
         int a = Integer.parseInt(codigo);
-        return this.codigo=a;
+        this.codigo=a;
     }
-
-    public int getVolumen(String volumen){
+    public int getCodigo(){
+        return codigo;
+    }
+    public void setVolumen(String volumen){
         int a = Integer.parseInt(volumen);
-        return this.volumen=a;
+        this.volumen=a;
     }
-    public String getEditorial(String editorial){
-        return this.editorial=editorial;
+    public int getVolumen(){
+        return volumen;
     }
-    public String getNombre(String nombre){
-        return this.nombre=nombre;
+    public void setEditorial(String editorial){
+        this.editorial=editorial;
     }
-    public String getApellido(String apellido){
-        return this.apellido=apellido;
-    }
-    public String getBio(String bio){
-        return this.bio=bio;
-    }
-    public String getSede(String sede){
-        return this.sede=sede;
-    }
-    public String getFacu(String facu){
-        return this.facultad=facu;
+    public String getEditorial(){
+        return this.editorial;
     }
 
+    public void setNombre(String nombre){
+        this.nombre=nombre;
+    }
+    public String getNombre(){
+        return this.nombre;
+    }
+    public void setApellido(String apellido){
+        this.apellido=apellido;
+    }
+    public String getApellido(){
+        return this.apellido;
+    }
+    public void setBio(String bio){
+        this.bio=bio;
+    }
+    public String getBio(){
+        return this.bio;
+    }
+    public void setSede(String sede){
+        this.sede=sede;
+    }
+    public String getSede(){
+        return this.sede;
+    }
+    public void setFacultad(String facultad){
+        this.facultad=facultad;
+    }
+    public String getFacultad(){
+        return this.facultad;
+    }
     public static void main(String[] args) {
         new View().showFrameMenu();
     }
