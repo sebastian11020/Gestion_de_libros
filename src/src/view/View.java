@@ -3,6 +3,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class View {
+    private String titulo_libro;
+    private int codigo;
+    private int volumen;
+    private String editorial;
+    private String nombre;
+    private String apellido;
+    private String bio;
+    private String sede;
+    private String facultad;
     private JFrame frame = new JFrame("Sistema gestor de libros");
     private  JButton crear = new JButton("Crear Libro");
     private  JPanel panelMenu = new JPanel();
@@ -34,7 +43,8 @@ public class View {
         JLabel editorialLibro = new JLabel("Editorial");
         JTextField datoEditorial = new JTextField(10);
         JButton agregarAutor = new JButton("Agregar autor");
-        panelMenu.remove(crear);
+        JButton volver = new JButton("Volver");
+        panelMenu.removeAll();
         panelMenu.add(tituloLibro);
         panelMenu.add(datoTitulo);
         panelMenu.add(codigoLibro);
@@ -44,11 +54,17 @@ public class View {
         panelMenu.add(editorialLibro);
         panelMenu.add(datoEditorial);
         panelMenu.add(agregarAutor);
+        panelMenu.add(volver);
         panelTitulo.add(titulo);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
         frame.revalidate();
+        volver.addActionListener(e->{
+            frame.getContentPane().removeAll();
+            panelMenu.removeAll();
+            showFrameMenu();
+        });
         agregarAutor.addActionListener(e->{
             if(!esNuloOVacio(datoTitulo.getText())&&!esNuloOVacio(datoEditorial.getText())){
                if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())){
@@ -97,6 +113,7 @@ public class View {
         JComboBox<String> sedeComboBox = new JComboBox<>(sedes);
         JComboBox<String> facultadComboBox = new JComboBox<>();
         JButton agregarBiblioteca = new JButton("Agregar Libro");
+        JButton volver = new JButton("Volver");
         panelMenu.removeAll();
         panelMenu.add(nombreAutor);
         panelMenu.add(datoNombre);
@@ -106,6 +123,11 @@ public class View {
         panelMenu.add(textArea);
         panelMenu.add(sedeComboBox);
         panelTitulo.add(titulo);
+        volver.addActionListener(e->{
+            frame.getContentPane().removeAll();
+            panelMenu.removeAll();
+            showFrameCreate();
+        });
         sedeComboBox.addActionListener(e->{
                 String selectedSede = (String) sedeComboBox.getSelectedItem();
                 if ("Duitama".equals(selectedSede)) {
@@ -136,6 +158,7 @@ public class View {
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
         panelMenu.add(facultadComboBox);
         panelMenu.add(agregarBiblioteca);
+        panelMenu.add(volver);
         frame.revalidate();
         agregarBiblioteca.addActionListener(e-> {
             if (!esNuloOVacio(datoNombre.getText()) && !esNuloOVacio(datoApellido.getText())
@@ -154,35 +177,35 @@ public class View {
     }
 
     public String getTitulo(String titulo){
-        return titulo;
+        return this.titulo_libro=titulo;
     }
 
     public int getCodigo(String codigo){
         int a = Integer.parseInt(codigo);
-        return a;
+        return this.codigo=a;
     }
 
     public int getVolumen(String volumen){
         int a = Integer.parseInt(volumen);
-        return a;
+        return this.volumen=a;
     }
     public String getEditorial(String editorial){
-        return editorial;
+        return this.editorial=editorial;
     }
     public String getNombre(String nombre){
-        return nombre;
+        return this.nombre=nombre;
     }
     public String getApellido(String apellido){
-        return apellido;
+        return this.apellido=apellido;
     }
     public String getBio(String bio){
-        return bio;
+        return this.bio=bio;
     }
     public String getSede(String sede){
-        return sede;
+        return this.sede=sede;
     }
     public String getFacu(String facu){
-        return facu;
+        return this.facultad=facu;
     }
 
     public static void main(String[] args) {
