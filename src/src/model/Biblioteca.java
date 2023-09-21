@@ -16,7 +16,4 @@ public class Biblioteca {
     public void eliminarLibro(Integer clave) {
         catalogo.remove(clave);
     }
-    public Map<Integer, Libro> obtenerCatalogo() {
-        return catalogo;
-    }
 }
