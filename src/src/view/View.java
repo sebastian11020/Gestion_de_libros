@@ -238,7 +238,7 @@ public class View {
     public String getFacultad(){
         return this.facultad;
     }
-    public static void main(String[] args) {
-        new View().showFrameMenu();
+    public void showMessage(String message){
+        JOptionPane.showMessageDialog(null,message);
     }
 }
