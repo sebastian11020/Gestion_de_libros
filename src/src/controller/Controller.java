@@ -1,12 +1,15 @@
 package controller;
 import view.View;
-import model.Arbol;
+import model.*;
+
 public class Controller {
     private View view;
     private Arbol arbol;
+    private Biblioteca biblioteca;
     public Controller(){
         this.view= new View();
         this.arbol=new Arbol();
+        this.biblioteca= new Biblioteca();
     }
     public void showInterface(){
         view.showFrameMenu();
