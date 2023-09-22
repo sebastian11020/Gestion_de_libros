@@ -42,4 +42,11 @@ public class Arbol {
             }
         }
     }
+    private void inorden(Nodo n) {
+        if (n != null) {
+            inorden(n.getIzquierda());
+            n.getCodigo();
+            inorden(n.getDerecha());
+        }
+    }
 }

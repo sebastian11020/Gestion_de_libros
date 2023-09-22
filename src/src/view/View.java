@@ -1,8 +1,9 @@
 package view;
 import javax.swing.*;
 import java.awt.*;
-
+import controller.Controller;
 public class View {
+    private Controller controller;
     private String titulo_libro;
     private int codigo;
     private int volumen;
@@ -74,7 +75,12 @@ public class View {
                     setCodigo(datoCodigo.getText());
                     setVolumen(datoVolumen.getText());
                     setEditorial(datoEditorial.getText());
-                    agregarAutorySede();
+                    if (controller != null) {
+                        controller.addCode();
+                    }
+                    if(!controller.existCode()) {
+                        agregarAutorySede();
+                    }
                 }else {
                     JOptionPane.showMessageDialog(null,"El codigo o el volumen no puede ser menor a 0");
                 }
@@ -96,7 +102,8 @@ public class View {
             return false;
         }
     }
-    public static boolean esNuloOVacio(String str) {
+
+    public boolean esNuloOVacio(String str) {
         return str == null || str.trim().isEmpty();
     }
 
@@ -181,6 +188,9 @@ public class View {
         frame.repaint();
     }
 
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
     public void setTituloLibro(String titulo){
         this.titulo_libro=titulo;
     }
