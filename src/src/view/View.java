@@ -15,20 +15,26 @@ public class View {
     private String facultad;
     private JFrame frame = new JFrame("Sistema gestor de libros");
     private  JButton crear = new JButton("Crear Libro");
+    private  JButton mostar = new JButton("Mostrar Libros");
     private  JPanel panelMenu = new JPanel();
 
     public void showFrameMenu() {
         JLabel titulo = new JLabel("Sistema gestor de libros");
         JPanel panelTitulo = new JPanel();
         frame.setSize(400, 400);
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panelTitulo.add(titulo);
         panelMenu.add(crear);
+        panelMenu.add(mostar);
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
         crear.addActionListener(e -> {
             showFrameCreate();
+        });
+        mostar.addActionListener(e->{
+            showFrameList();
         });
         frame.setVisible(true);
     }
@@ -92,6 +98,28 @@ public class View {
             }
         });
         frame.repaint();
+    }
+
+    public void showFrameList(){
+        JPanel panelTitulo = new JPanel();
+        JLabel titulo = new JLabel("Mostrar libros");
+        JButton mostrarTodos= new JButton("Mostrar todos los libros");
+        JButton mostrarPorSede = new JButton("Mostar libros por sede");
+        JButton volver = new JButton("Volver");
+        panelTitulo.add(titulo);
+        panelMenu.removeAll();
+        panelMenu.add(mostrarTodos);
+        panelMenu.add(mostrarPorSede);
+        panelMenu.add(volver);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
+        frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
+        frame.revalidate();
+        volver.addActionListener(e->{
+            frame.getContentPane().removeAll();
+            panelMenu.removeAll();
+            showFrameMenu();
+        });
     }
 
     public  boolean esNumero(String str) {
