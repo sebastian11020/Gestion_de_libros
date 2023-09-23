@@ -2,7 +2,6 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
-
 import controller.Controller;
 import model.Libro;
 import model.LibroTableModel;
