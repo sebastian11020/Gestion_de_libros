@@ -13,10 +13,6 @@ public class Controller{
         return biblioteca;
     }
 
-    public void setBiblioteca(Biblioteca biblioteca) {
-        this.biblioteca = biblioteca;
-    }
-
     private Biblioteca biblioteca;
 
     private Biblioteca biblioAux;

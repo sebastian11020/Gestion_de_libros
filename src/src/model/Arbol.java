@@ -128,23 +128,15 @@ public class Arbol {
         return Math.abs(balance) <= 1 && estaBalanceado(nodo.getIzquierda()) && estaBalanceado(nodo.getDerecha());
     }
 
-
-    private void inorden(Nodo n, List<Libro> librosEnOrden, Biblioteca biblioteca) {
+    private void inorden(Nodo n) {
         if (n != null) {
-            inorden(n.getIzquierda(), librosEnOrden, biblioteca);
-            int codigo = n.getCodigo();
-            Libro libro = biblioteca.obtenerLibro(codigo);
-            if (libro != null) {
-                librosEnOrden.add(libro);
-            }
-            inorden(n.getDerecha(), librosEnOrden, biblioteca);
+            inorden(n.getIzquierda());
+            n.imprimirCodigo();
+            inorden(n.getDerecha());
         }
     }
-
-    public List<Libro> inorden(Biblioteca biblioteca) {
-        List<Libro> librosEnOrden = new ArrayList<>();
-        inorden(this.raiz, librosEnOrden, biblioteca);
-        return librosEnOrden;
+    public void inorden() {
+        this.inorden(this.raiz);
     }
 
 }
