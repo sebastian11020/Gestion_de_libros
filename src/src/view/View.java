@@ -182,7 +182,6 @@ public class View {
                 setBio(textArea.getText());
                 setSede(sede[0]);
                 setFacultad(selectedFacu[0]);
-                System.out.println(getNombre()+getApellido()+getBio()+getSede()+getFacultad());
             }else {
                 JOptionPane.showMessageDialog(null,"No pueden haber campos vacios o sin seleccionar");
             }
