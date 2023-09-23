@@ -37,7 +37,7 @@ public class Controller{
             biblioteca.obtenerLibro(value).setCantidad(libro.getCantidad()+1);
             biblioteca.eliminarLibro(view.getCodigo());
         }
-        biblioteca.mostrarTodosLosLibros();
+        arbol.inorden();
     }
 
     public boolean existCode(){
