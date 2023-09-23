@@ -16,6 +16,9 @@ public class Biblioteca {
     public void eliminarLibro(Integer clave) {
         catalogo.remove(clave);
     }
+    public Map<Integer, Libro> obtenerCatalogo() {
+        return catalogo;
+    }
     public void mostrarDatosLibro(Integer clave) {
         Libro libro = obtenerLibro(clave);
         if (libro != null) {
@@ -30,6 +33,7 @@ public class Biblioteca {
             Sede sede = libro.getSede();
             System.out.println("Sede del Libro: " + sede.getSede_libro());
             System.out.println("Campus del Libro: " + sede.getCampus_libro());
+            System.out.println("Cantidad de Copias Disponibles: " + libro.getCantidad());
         } else {
             System.out.println("El libro con clave " + clave + " no existe en la biblioteca.");
         }
