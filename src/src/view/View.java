@@ -101,7 +101,7 @@ public class View {
                 }else {
                     JOptionPane.showMessageDialog(null,"El codigo o el volumen no son validos");
                 }
-            }else {
+             }else {
                 JOptionPane.showMessageDialog(null,"No pueden haber campos vacios");
             }
         });
