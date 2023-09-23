@@ -182,6 +182,7 @@ public class View {
                 setBio(textArea.getText());
                 setSede(sede[0]);
                 setFacultad(selectedFacu[0]);
+                controller.addData();
             }else {
                 JOptionPane.showMessageDialog(null,"No pueden haber campos vacios o sin seleccionar");
             }
