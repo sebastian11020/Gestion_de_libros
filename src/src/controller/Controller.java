@@ -9,7 +9,10 @@ public class Controller{
     private boolean exist;
     private Arbol arbol;
     private Biblioteca biblioteca;
+
+    private Biblioteca biblioAux;
     public Controller(){
+        this.biblioAux = new Biblioteca();
         this.view= new View();
         this.arbol=new Arbol();
         this.biblioteca= new Biblioteca();
@@ -38,6 +41,10 @@ public class Controller{
             biblioteca.obtenerLibro(value).setCantidad(libro.getCantidad()+1);
             biblioteca.eliminarLibro(view.getCodigo());
         }
+    }
+
+    public void deleteData(){
+
     }
 
     public boolean existCode(){
