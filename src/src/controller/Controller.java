@@ -19,6 +19,7 @@ public class Controller{
     }
     public void addCode(){
         if (!arbol.existe(view.getCodigo())) {
+            arbol.insertar(view.getCodigo());
             exist=false;
         } else {
             view.showMessage("El codigo ya esta registrado");
