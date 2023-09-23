@@ -38,11 +38,4 @@ public class Biblioteca {
             System.out.println("El libro con clave " + clave + " no existe en la biblioteca.");
         }
     }
-    public void mostrarTodosLosLibros() {
-        System.out.println("Lista de Todos los Libros en la Biblioteca:");
-        for (Map.Entry<Integer, Libro> entry : catalogo.entrySet()) {
-            System.out.println("\nClave: " + entry.getKey());
-            mostrarDatosLibro(entry.getKey());
-        }
-    }
 }

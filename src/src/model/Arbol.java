@@ -2,7 +2,7 @@ package model;
 
 public class Arbol {
     private Nodo raiz;
-
+    private Biblioteca biblioteca = new Biblioteca();
     public Arbol() {
     }
 
@@ -120,5 +120,16 @@ public class Arbol {
         int balance = altura(nodo.getIzquierda()) - altura(nodo.getDerecha());
 
         return Math.abs(balance) <= 1 && estaBalanceado(nodo.getIzquierda()) && estaBalanceado(nodo.getDerecha());
+    }
+
+    public void inorden(Nodo n) {
+        if (n != null) {
+            inorden(n.getIzquierda());
+            biblioteca.mostrarDatosLibro(n.getCodigo());
+            inorden(n.getDerecha());
+        }
+    }
+    public void inorden() {
+        this.inorden(this.raiz);
     }
 }

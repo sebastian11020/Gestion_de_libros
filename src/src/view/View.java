@@ -1,6 +1,11 @@
 package view;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+import model.Libro;
+
 import controller.Controller;
 public class View {
     private Controller controller;
@@ -17,7 +22,7 @@ public class View {
     private  JButton crear = new JButton("Crear Libro");
     private  JButton mostar = new JButton("Mostrar Libros");
     private  JPanel panelMenu = new JPanel();
-
+    private  DefaultTableModel tableModel;
     public void showFrameMenu() {
         JLabel titulo = new JLabel("Sistema gestor de libros");
         JPanel panelTitulo = new JPanel();
@@ -120,8 +125,9 @@ public class View {
             panelMenu.removeAll();
             showFrameMenu();
         });
+        mostrarTodos.addActionListener(e->{
+        });
     }
-
     public  boolean esNumero(String str) {
         try {
             Integer.parseInt(str);

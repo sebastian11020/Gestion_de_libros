@@ -44,7 +44,7 @@ public class Controller{
                 biblioteca.eliminarLibro(view.getCodigo());
             }
         }
-        biblioteca.mostrarTodosLosLibros();
+        arbol.inorden();
     }
 
     public void deleteData(){
