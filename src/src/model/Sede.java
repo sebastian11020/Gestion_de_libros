@@ -24,4 +24,28 @@ public class Sede {
     public void setCampus_libro(String campus_libro) {
         this.campus_libro = campus_libro;
     }
+
+    public boolean sonIguales(Sede otraSede) {
+        if (this == otraSede) {
+            return true;
+        }
+        if (otraSede == null) {
+            return false;
+        }
+        if (sede_libro == null) {
+            if (otraSede.sede_libro != null) {
+                return false;
+            }
+        } else if (!sede_libro.equals(otraSede.sede_libro)) {
+            return false;
+        }
+        if (campus_libro == null) {
+            if (otraSede.campus_libro != null) {
+                return false;
+            }
+        } else if (!campus_libro.equals(otraSede.campus_libro)) {
+            return false;
+        }
+        return true;
+    }
 }
