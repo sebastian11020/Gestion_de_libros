@@ -9,7 +9,10 @@ public class Controller{
     private boolean exist;
     private Arbol arbol;
     private Biblioteca biblioteca;
+
+    private Biblioteca biblioAux;
     public Controller(){
+        this.biblioAux = new Biblioteca();
         this.view= new View();
         this.arbol=new Arbol();
         this.biblioteca= new Biblioteca();
@@ -37,10 +40,15 @@ public class Controller{
             biblioteca.obtenerLibro(value).setCantidad(biblioteca.obtenerLibro(value).getCantidad()+1);
             if(biblioteca.obtenerLibro(value).getCantidad()==1){
             }else{
+                biblioAux.agregarLibro(view.getCodigo(), libro);
                 biblioteca.eliminarLibro(view.getCodigo());
             }
         }
         biblioteca.mostrarTodosLosLibros();
+    }
+
+    public void deleteData(){
+
     }
 
     public boolean existCode(){
