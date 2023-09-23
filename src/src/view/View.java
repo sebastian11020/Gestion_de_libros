@@ -118,14 +118,9 @@ public class View {
         panelMenu.removeAll();
         panelMenu.add(mostrarTodos);
         mostrarTodos.addActionListener(e -> {
-            // Obtén los libros del catálogo y muestra la tabla
             Map<Integer, Libro> catalogo = controller.getBiblioteca().obtenerCatalogo();
             libroTableModel.setLibros(catalogo);
-
-            // Crea un JScrollPane para la tabla
             JScrollPane tableScrollPane = new JScrollPane(libroTable);
-
-            // Crea un nuevo JFrame para mostrar la tabla
             JFrame libroFrame = new JFrame("Lista de Libros");
             libroFrame.getContentPane().add(tableScrollPane);
             libroFrame.setSize(800, 600);
