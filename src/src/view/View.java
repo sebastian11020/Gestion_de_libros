@@ -108,6 +108,7 @@ public class View {
     }
 
     public void agregarAutorySede(){
+        final String[] sede = {null};
         final String[] selectedFacu = {null};
         String[] sedes = {"Duitama", "Sogamoso", "Tunja","Chiquinquira","Aguazul"};
         frame.setSize(380,380);
@@ -142,6 +143,7 @@ public class View {
         });
         sedeComboBox.addActionListener(e->{
                 String selectedSede = (String) sedeComboBox.getSelectedItem();
+                sede[0] = selectedSede;
                 if ("Duitama".equals(selectedSede)) {
                     String[] facultadesSedeA = {"Seccional Duitama"};
                     facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeA));
@@ -164,7 +166,6 @@ public class View {
                     selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
                 }
         });
-        String selectedSede = (String) sedeComboBox.getSelectedItem();
         frame.getContentPane().removeAll();
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
@@ -174,13 +175,14 @@ public class View {
         frame.revalidate();
         agregarBiblioteca.addActionListener(e-> {
             if (!esNuloOVacio(datoNombre.getText()) && !esNuloOVacio(datoApellido.getText())
-                    && !esNuloOVacio(textArea.getText()) && !esNuloOVacio(selectedSede)
+                    && !esNuloOVacio(textArea.getText()) && !esNuloOVacio(sede[0])
                     && !esNuloOVacio(selectedFacu[0])) {
                 setNombre(datoNombre.getText());
                 setApellido(datoApellido.getText());
                 setBio(textArea.getText());
-                setSede(selectedSede);
+                setSede(sede[0]);
                 setFacultad(selectedFacu[0]);
+                System.out.println(getNombre()+getApellido()+getBio()+getSede()+getFacultad());
             }else {
                 JOptionPane.showMessageDialog(null,"No pueden haber campos vacios o sin seleccionar");
             }
