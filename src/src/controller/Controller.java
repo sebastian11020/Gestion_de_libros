@@ -8,6 +8,15 @@ public class Controller{
     private View view;
     private boolean exist;
     private Arbol arbol;
+
+    public Biblioteca getBiblioteca() {
+        return biblioteca;
+    }
+
+    public void setBiblioteca(Biblioteca biblioteca) {
+        this.biblioteca = biblioteca;
+    }
+
     private Biblioteca biblioteca;
 
     private Biblioteca biblioAux;

@@ -1,7 +1,12 @@
 package view;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
+
 import controller.Controller;
+import model.Libro;
+import model.LibroTableModel;
+
 public class View {
     private Controller controller;
     private String titulo_libro;
@@ -17,6 +22,9 @@ public class View {
     private  JButton crear = new JButton("Crear Libro");
     private  JButton mostar = new JButton("Mostrar Libros");
     private  JPanel panelMenu = new JPanel();
+
+    private LibroTableModel libroTableModel = new LibroTableModel();
+    private JTable libroTable = new JTable(libroTableModel);
 
     public void showFrameMenu() {
         JLabel titulo = new JLabel("Sistema gestor de libros");
@@ -109,6 +117,22 @@ public class View {
         panelTitulo.add(titulo);
         panelMenu.removeAll();
         panelMenu.add(mostrarTodos);
+        mostrarTodos.addActionListener(e -> {
+            // Obtén los libros del catálogo y muestra la tabla
+            Map<Integer, Libro> catalogo = controller.getBiblioteca().obtenerCatalogo();
+            libroTableModel.setLibros(catalogo);
+
+            // Crea un JScrollPane para la tabla
+            JScrollPane tableScrollPane = new JScrollPane(libroTable);
+
+            // Crea un nuevo JFrame para mostrar la tabla
+            JFrame libroFrame = new JFrame("Lista de Libros");
+            libroFrame.getContentPane().add(tableScrollPane);
+            libroFrame.setSize(800, 600);
+            libroFrame.setLocationRelativeTo(null);
+            libroFrame.setVisible(true);
+        });
+
         panelMenu.add(mostrarPorSede);
         panelMenu.add(volver);
         frame.getContentPane().removeAll();
