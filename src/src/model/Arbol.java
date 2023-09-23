@@ -1,5 +1,11 @@
 package model;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import model.Libro;
+
+
 public class Arbol {
     private Nodo raiz;
 
@@ -121,4 +127,24 @@ public class Arbol {
 
         return Math.abs(balance) <= 1 && estaBalanceado(nodo.getIzquierda()) && estaBalanceado(nodo.getDerecha());
     }
+
+
+    private void inorden(Nodo n, List<Libro> librosEnOrden, Biblioteca biblioteca) {
+        if (n != null) {
+            inorden(n.getIzquierda(), librosEnOrden, biblioteca);
+            int codigo = n.getCodigo();
+            Libro libro = biblioteca.obtenerLibro(codigo);
+            if (libro != null) {
+                librosEnOrden.add(libro);
+            }
+            inorden(n.getDerecha(), librosEnOrden, biblioteca);
+        }
+    }
+
+    public List<Libro> inorden(Biblioteca biblioteca) {
+        List<Libro> librosEnOrden = new ArrayList<>();
+        inorden(this.raiz, librosEnOrden, biblioteca);
+        return librosEnOrden;
+    }
+
 }
