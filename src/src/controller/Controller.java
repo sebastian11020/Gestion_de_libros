@@ -33,18 +33,14 @@ public class Controller{
     }
     public void addData(){
         Libro libro = new Libro(view.getTitulo(), view.getCodigo(), view.getVolumen(), view.getEditorial(),
-                new Autor(view.getNombre(), view.getApellido(), view.getBio()), new Sede(view.getSede(), view.getFacultad()),0);
+                new Autor(view.getNombre(), view.getApellido(), view.getBio()),
+                new Sede(view.getSede(), view.getFacultad()),1);
         biblioteca.agregarLibro(view.getCodigo(), libro);
-        int value = libro.buscarLibroIgual(biblioteca.obtenerCatalogo());
-        if (libro.alMenosUnoIgual(biblioteca.obtenerCatalogo())==true){
-            biblioteca.obtenerLibro(value).setCantidad(biblioteca.obtenerLibro(value).getCantidad()+1);
-            if(biblioteca.obtenerLibro(value).getCantidad()==1){
-            }else{
-                biblioAux.agregarLibro(view.getCodigo(), libro);
-                biblioteca.eliminarLibro(view.getCodigo());
-            }
+        if(!libro.alMenosUnoIgual(biblioteca.obtenerCatalogo())){
+            int value = libro.buscarLibroIgualExcepto(biblioteca.obtenerCatalogo());
+            biblioteca.obtenerLibro(value).setCantidad(libro.getCantidad()+1);
+            biblioteca.eliminarLibro(view.getCodigo());
         }
-        arbol.inorden();
     }
 
     public void deleteData(){
