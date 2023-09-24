@@ -40,13 +40,8 @@ public class Controller{
     public void addData(){
         Libro libro = new Libro(view.getTitulo(), view.getCodigo(), view.getVolumen(), view.getEditorial(),
                 new Autor(view.getNombre(), view.getApellido(), view.getBio()),
-                new Sede(view.getSede(), view.getFacultad()),1);
+                new Sede(view.getSede(), view.getFacultad()), view.getCopias());
         biblioteca.agregarLibro(view.getCodigo(), libro);
-        if(!libro.alMenosUnoIgual(biblioteca.obtenerCatalogo())){
-            int value = libro.buscarLibroIgual(biblioteca.obtenerCatalogo());
-            biblioteca.obtenerLibro(value).setCantidad(libro.getCantidad()+1);
-            biblioteca.eliminarLibro(view.getCodigo());
-        }
     }
     public void mostrarTodo(){
         arbol.inorden(biblioteca);
@@ -61,7 +56,7 @@ public class Controller{
             autor.append(autor1.getNombre()).append(" ").append(autor1.getApellido());
             autorLibro= String.valueOf(autor);
             view.addDateTable(libro.getISBN(), libro.getTitulo(), libro.getVolumen(), view.getEditorial(),autorLibro,
-                    autor1.getDescripcion(),sede.getSede_libro(),sede.getCampus_libro() );
+                    autor1.getDescripcion(),sede.getSede_libro(),sede.getCampus_libro(),libro.getCantidad() );
         }
     }
 

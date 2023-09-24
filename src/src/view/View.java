@@ -11,6 +11,7 @@ public class View {
     private Controller controller;
     private String titulo_libro;
     private int codigo;
+    private int copias;
     private int volumen;
     private String editorial;
     private String nombre;
@@ -61,6 +62,8 @@ public class View {
         JTextField datoVolumen = new JTextField(10);
         JLabel editorialLibro = new JLabel("Editorial");
         JTextField datoEditorial = new JTextField(10);
+        JLabel copias= new JLabel("Numero de Copias");
+        JTextField datoCopias = new JTextField(10);
         JButton agregarAutor = new JButton("Agregar autor");
         JButton volver = new JButton("Volver");
         panelMenu.removeAll();
@@ -72,6 +75,8 @@ public class View {
         panelMenu.add(datoVolumen);
         panelMenu.add(editorialLibro);
         panelMenu.add(datoEditorial);
+        panelMenu.add(copias);
+        panelMenu.add(datoCopias);
         panelMenu.add(agregarAutor);
         panelTitulo.add(titulo);
         frame.getContentPane().removeAll();
@@ -86,12 +91,13 @@ public class View {
         });
         agregarAutor.addActionListener(e->{
             if(!esNuloOVacio(datoTitulo.getText())&&!esNuloOVacio(datoEditorial.getText())){
-               if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())){
+               if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())&&esNumero(datoCopias.getText())){
                 setTituloLibro(datoTitulo.getText());
-                if(Integer.parseInt(datoCodigo.getText())>0 && Integer.parseInt(datoVolumen.getText())>0) {
+                if(Integer.parseInt(datoCodigo.getText())>0 && Integer.parseInt(datoVolumen.getText())>0&& Integer.parseInt(datoCopias.getText())>0) {
                     setCodigo(datoCodigo.getText());
                     setVolumen(datoVolumen.getText());
                     setEditorial(datoEditorial.getText());
+                    setCopias(datoCopias.getText());
                     if (controller != null) {
                         controller.addCode();
                     }
@@ -218,6 +224,7 @@ public class View {
         model.addColumn("Descripcion del autor");
         model.addColumn("Sede");
         model.addColumn("Facultad");
+        model.addColumn("Copias");
         controller.mostrarTodo();
         JTable table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
@@ -234,8 +241,8 @@ public class View {
         });
     }
     public void addDateTable(int codigo,String titulo_libro,int volumen,String editorial,String autor,String descripcion,
-                             String sede,String facultad){
-        model.addRow(new Object[]{codigo,titulo_libro,volumen,editorial,autor,descripcion,sede,facultad});
+                             String sede,String facultad,int copias){
+        model.addRow(new Object[]{codigo,titulo_libro,volumen,editorial,autor,descripcion,sede,facultad,copias});
     }
     public  boolean esNumero(String str) {
         try {
@@ -388,6 +395,14 @@ public class View {
     }
     public void setSede(String sede){
         this.sede=sede;
+    }
+
+    public void setCopias(String copias){
+        int a = Integer.parseInt(copias);
+        this.copias=a;
+    }
+    public int getCopias(){
+        return copias;
     }
     public String getSede(){
         return this.sede;
