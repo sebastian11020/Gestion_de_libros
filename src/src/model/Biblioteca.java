@@ -4,16 +4,6 @@ import java.util.Map;
 public class Biblioteca {
     private Map<Integer, Libro> catalogo;
     private Map<Integer,Libro> inorden;
-    private String titulo;
-    private int codigo;
-    private int volumen;
-    private String editorial;
-    private String nombre;
-    private String apellido;
-    private String descripsion;
-    private String sede;
-    private String facultad;
-    private int copias;
     public Biblioteca() {
         catalogo = new HashMap<>();
         inorden=new HashMap<>();

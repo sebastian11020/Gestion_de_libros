@@ -23,7 +23,6 @@ public class View {
     private  JButton crear = new JButton("Crear Libro");
     private  JButton mostar = new JButton("Mostrar Libros");
     private  JPanel panelMenu = new JPanel();
-    private  DefaultTableModel tableModel;
     public void showFrameMenu() {
         JLabel titulo = new JLabel("Sistema gestor de libros");
         JPanel panelTitulo = new JPanel();
@@ -107,7 +106,6 @@ public class View {
     }
     public void showFrameList(){
         JPanel panelTitulo = new JPanel();
-        JPanel panelTabla = new JPanel();
         JLabel titulo = new JLabel("Mostrar libros");
         JButton mostrarTodos= new JButton("Mostrar todos los libros");
         JButton mostrarPorSede = new JButton("Mostar libros por sede");
@@ -122,25 +120,7 @@ public class View {
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
         frame.revalidate();
         mostrarTodos.addActionListener(e-> {
-            frame.setSize(600,500);
-            frame.setResizable(true);
-            panelMenu.removeAll();
-            panelMenu.add(volver);
-            model.addColumn("Codigo ISBN");
-            model.addColumn("Titulo");
-            model.addColumn("Volumen");
-            model.addColumn("Editorial");
-            model.addColumn("Autor");
-            model.addColumn("Descripcion del autor");
-            model.addColumn("Sede");
-            model.addColumn("Facultad");
-            controller.mostrarTodo();
-            JTable table = new JTable(model);
-            JScrollPane scrollPane = new JScrollPane(table);
-            panelTabla.add(scrollPane);
-            frame.getContentPane().add(BorderLayout.CENTER,panelTabla);
-            frame.getContentPane().add(BorderLayout.SOUTH,panelMenu);
-            frame.revalidate();
+            showTable();
         });
         mostrarPorSede.addActionListener(e->{
             selectSede();
@@ -149,6 +129,38 @@ public class View {
             frame.getContentPane().removeAll();
             panelMenu.removeAll();
             showFrameMenu();
+        });
+    }
+
+    public void showTable(){
+        model.setRowCount(0);
+        model.setColumnCount(0);
+        JPanel panelTabla = new JPanel();
+        JButton volver = new JButton("Volver");
+        frame.setSize(600,500);
+        frame.setResizable(true);
+        panelMenu.removeAll();
+        panelMenu.add(volver);
+        model.addColumn("Codigo ISBN");
+        model.addColumn("Titulo");
+        model.addColumn("Volumen");
+        model.addColumn("Editorial");
+        model.addColumn("Autor");
+        model.addColumn("Descripcion del autor");
+        model.addColumn("Sede");
+        model.addColumn("Facultad");
+        controller.mostrarTodo();
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+        panelTabla.add(scrollPane);
+        frame.getContentPane().add(BorderLayout.CENTER,panelTabla);
+        frame.getContentPane().add(BorderLayout.SOUTH,panelMenu);
+        frame.revalidate();
+        volver.addActionListener(e->{
+            frame.getContentPane().removeAll();
+            panelMenu.removeAll();
+            panelTabla.removeAll();
+            showFrameList();
         });
     }
     public void addDateTable(int codigo,String titulo_libro,int volumen,String editorial,String autor,String descripcion,
