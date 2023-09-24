@@ -114,15 +114,18 @@ public class View {
 
     public void showFrameDelete() {
         JPanel panelTitulo = new JPanel();
+        JPanel panelTabla = new JPanel();
         JLabel titulo = new JLabel("Eliminar libro");
         JLabel isbnLabel = new JLabel("ISBN:");
         JTextField isbnTextField = new JTextField(10);
         JLabel sedeLabel = new JLabel("Sede:");
+        JButton mostrarTodos= new JButton("Mostrar todos los libros");
         JComboBox<String> sedeComboBox = new JComboBox<>(new String[]{"Duitama", "Sogamoso", "Tunja", "Chiquinquira", "Aguazul"});
         JButton eliminarButton = new JButton("Eliminar");
         JButton volverButton = new JButton("Volver");
 
         panelMenu.removeAll();
+        panelMenu.add(mostrarTodos);
         panelMenu.add(isbnLabel);
         panelMenu.add(isbnTextField);
         panelMenu.add(sedeLabel);
@@ -152,6 +155,28 @@ public class View {
             } else {
                 showMessage("Por favor, complete los campos correctamente.");
             }
+        });
+
+        mostrarTodos.addActionListener(e-> {
+            frame.setSize(600,500);
+            frame.setResizable(true);
+            panelMenu.removeAll();
+            panelMenu.add(volverButton);
+            model.addColumn("Codigo ISBN");
+            model.addColumn("Titulo");
+            model.addColumn("Volumen");
+            model.addColumn("Editorial");
+            model.addColumn("Autor");
+            model.addColumn("Descripcion del autor");
+            model.addColumn("Sede");
+            model.addColumn("Facultad");
+            controller.mostrarTodo();
+            JTable table = new JTable(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            panelTabla.add(scrollPane);
+            frame.getContentPane().add(BorderLayout.CENTER,panelTabla);
+            frame.getContentPane().add(BorderLayout.SOUTH,panelMenu);
+            frame.revalidate();
         });
     }
     public void showFrameList(){
