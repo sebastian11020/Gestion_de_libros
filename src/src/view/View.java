@@ -152,7 +152,6 @@ public class View {
             panelMenu.removeAll();
             showFrameMenu();
         });
-
         eliminarButton.addActionListener(e -> {
             String isbnText = isbnTextField.getText();
             String selectedSede = (String) sedeComboBox.getSelectedItem();
@@ -166,25 +165,8 @@ public class View {
         });
 
         mostrarTodos.addActionListener(e-> {
-            frame.setSize(600,500);
-            frame.setResizable(true);
-            panelMenu.removeAll();
-            panelMenu.add(volverButton);
-            model.addColumn("Codigo ISBN");
-            model.addColumn("Titulo");
-            model.addColumn("Volumen");
-            model.addColumn("Editorial");
-            model.addColumn("Autor");
-            model.addColumn("Descripcion del autor");
-            model.addColumn("Sede");
-            model.addColumn("Facultad");
-            controller.mostrarTodo();
-            JTable table = new JTable(model);
-            JScrollPane scrollPane = new JScrollPane(table);
-            panelTabla.add(scrollPane);
-            frame.getContentPane().add(BorderLayout.CENTER,panelTabla);
-            frame.getContentPane().add(BorderLayout.SOUTH,panelMenu);
-            frame.revalidate();
+            frame.getContentPane().removeAll();
+            showTable();
         });
     }
 
