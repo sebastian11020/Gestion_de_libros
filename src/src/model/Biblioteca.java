@@ -50,6 +50,16 @@ public class Biblioteca {
             System.out.println("El libro con clave " + clave + " no existe en la biblioteca.");
         }
     }
+    public Map<Integer,Libro> getLibro(int clave){
+        Map<Integer,Libro> libroMap = new HashMap<>();
+        Libro libro = obtenerLibro(clave);
+        if (libro != null) {
+            libroMap.put(clave,libro);
+        } else {
+            System.out.println("El libro con clave " + clave + " no existe en la biblioteca.");
+        }
+        return libroMap;
+    }
     public Map<Integer,Libro> getInorden(){
         return inorden;
     }

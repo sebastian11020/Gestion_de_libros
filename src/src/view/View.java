@@ -18,9 +18,10 @@ public class View {
     private JFrame frame = new JFrame("Sistema gestor de libros");
     private JButton eliminarLibro = new JButton("Eliminar Libro");
     private DefaultTableModel model = new DefaultTableModel();
+    private DefaultTableModel model1 = new DefaultTableModel();
     private  JButton crear = new JButton("Crear Libro");
     private  JButton mostar = new JButton("Mostrar Libros");
-    private  JButton buscar = new JButton("Buscar Libro");
+    private  JButton buscar = new JButton("Buscar libro");
     private  JPanel panelMenu = new JPanel();
     public void showFrameMenu() {
         JLabel titulo = new JLabel("Sistema gestor de libros");
@@ -46,14 +47,9 @@ public class View {
         eliminarLibro.addActionListener(e->{
             showFrameDelete();
         });
-
         buscar.addActionListener(e->{
             showFrameSearch();
         });
-
-        frame.setVisible(true);
-    }
-
     public void showFrameCreate() {
         JPanel panelTitulo = new JPanel();
         JLabel titulo = new JLabel("Agregar libro");
@@ -170,57 +166,32 @@ public class View {
         });
     }
 
-    public void showFrameSearch(){
+    public void showFrameSearch() {
         JPanel panelTitulo = new JPanel();
-        JPanel panelTabla = new JPanel();
-        JLabel titulo = new JLabel("Buscar Libro");
-        JLabel tituloLibro = new JLabel("Titulo");
-        JTextField datoTitulo = new JTextField(10);
-        JLabel codigoLibro = new JLabel("Codigo ISBN");
-        JTextField datoCodigo = new JTextField(10);
-        JLabel sedeLabel = new JLabel("Sede:");
-        JComboBox<String> sedeComboBox = new JComboBox<>(new String[]{"Duitama", "Sogamoso", "Tunja", "Chiquinquira", "Aguazul"});
-        JButton buscarButton = new JButton("Buscar");
-        JButton volverButton = new JButton("Volver");
-
-        panelMenu.removeAll();
-        panelMenu.add(tituloLibro);
-        panelMenu.add(datoTitulo);
-        panelMenu.add(codigoLibro);
-        panelMenu.add(datoCodigo);
-        panelMenu.add(sedeLabel);
-        panelMenu.add(sedeComboBox);
-        panelMenu.add(buscarButton);
-        panelMenu.add(volverButton);
-
+        JLabel titulo = new JLabel("Buscar libros");
+        JButton mostrarTodos = new JButton("Buscar libro");
+        JButton volver = new JButton("Volver");
+        JLabel buscar= new JLabel("ISBN:");
+        JTextField isbnTextField = new JTextField(10);
         panelTitulo.add(titulo);
+        panelMenu.removeAll();
         frame.getContentPane().removeAll();
+        panelMenu.add(buscar);
+        panelMenu.add(isbnTextField);
+        panelMenu.add(mostrarTodos);
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
+        frame.getContentPane().add(BorderLayout.SOUTH, volver);
         frame.revalidate();
-
-        volverButton.addActionListener(e -> {
+        volver.addActionListener(e -> {
             frame.getContentPane().removeAll();
             panelMenu.removeAll();
             showFrameMenu();
         });
-
-        buscarButton.addActionListener(e -> {
-            String codigo = datoCodigo.getText();
-            String titulo_ = datoTitulo.getText();
-            String sede = (String) sedeComboBox.getSelectedItem();
-            int isbn = Integer.parseInt(codigo);
-            if (sede==null) {
-                controller.searchISBNTitle(isbn, titulo_);
-            } else if (titulo_ == null) {
-                controller.searchISBNSede(isbn, sede);
-            } else if (isbn == 0) {
-                controller.searchTitleSede(titulo_,sede);
-            }else{
-                controller.searchISBNTitle(isbn, titulo_);
-            }
+        mostrarTodos.addActionListener(e-> {
             frame.getContentPane().removeAll();
-            showTable();
+            setCodigo(isbnTextField.getText());
+            showTableSearch();
         });
     }
 
@@ -253,7 +224,7 @@ public class View {
         model.setColumnCount(0);
         JPanel panelTabla = new JPanel();
         JButton volver = new JButton("Volver");
-        frame.setSize(600,500);
+        frame.setSize(800,500);
         frame.setResizable(true);
         panelMenu.removeAll();
         model.addColumn("Codigo ISBN");
@@ -283,6 +254,42 @@ public class View {
     public void addDateTable(int codigo,String titulo_libro,int volumen,String editorial,String autor,String descripcion,
                              String sede,String facultad,int copias){
         model.addRow(new Object[]{codigo,titulo_libro,volumen,editorial,autor,descripcion,sede,facultad,copias});
+    }
+    public void showTableSearch(){
+        model1.setRowCount(0);
+        model1.setColumnCount(0);
+        JPanel panelTabla = new JPanel();
+        JButton volver = new JButton("Volver");
+        frame.setSize(800,500);
+        frame.setResizable(true);
+        panelMenu.removeAll();
+        model1.addColumn("Codigo ISBN");
+        model1.addColumn("Titulo");
+        model1.addColumn("Volumen");
+        model1.addColumn("Editorial");
+        model1.addColumn("Autor");
+        model1.addColumn("Descripcion del autor");
+        model1.addColumn("Sede");
+        model1.addColumn("Facultad");
+        model1.addColumn("Copias");
+        JTable table = new JTable(model1);
+        JScrollPane scrollPane = new JScrollPane(table);
+        controller.buscar();
+        panelTabla.add(scrollPane);
+        frame.getContentPane().add(BorderLayout.CENTER,panelTabla);
+        frame.getContentPane().add(BorderLayout.SOUTH,panelMenu);
+        frame.getContentPane().add(BorderLayout.SOUTH, volver);
+        frame.revalidate();
+        volver.addActionListener(e->{
+            frame.getContentPane().removeAll();
+            panelMenu.removeAll();
+            panelTabla.removeAll();
+            showFrameMenu();
+        });
+    }
+    public void addDateTableSearch(int codigo,String titulo_libro,int volumen,String editorial,String autor,String descripcion,
+                             String sede,String facultad,int copias){
+        model1.addRow(new Object[]{codigo,titulo_libro,volumen,editorial,autor,descripcion,sede,facultad,copias});
     }
     public  boolean esNumero(String str) {
         try {
