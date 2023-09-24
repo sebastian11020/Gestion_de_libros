@@ -70,9 +70,16 @@ public class Controller{
             int clave = entry.getKey();
             Libro libro = entry.getValue();
             if (libro.getISBN() == isbn && libro.getSede().getSede_libro().equals(sede)) {
-
-                biblioteca.eliminarLibro(clave);
-                view.showMessage("Libro eliminado con exito");
+                int cantidadActual = libro.getCantidad();
+                if (cantidadActual > 0) {
+                    libro.setCantidad(cantidadActual - 1);
+                }
+                if (libro.getCantidad() <= 0) {
+                    biblioteca.eliminarLibro(clave);
+                    view.showMessage("Libro eliminado con éxito");
+                } else {
+                    view.showMessage("Se eliminó una copia del libro");
+                }
                 return;
             }
         }
