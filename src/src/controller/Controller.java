@@ -103,34 +103,6 @@ public class Controller{
         }
     }
 
-    public boolean searchISBN(int codigo){
-        if(biblioteca.obtenerLibro(codigo)==null){
-            if(biblioAux.obtenerLibro(codigo)==null){
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
-    public boolean searchTitle(String titulo){
-        if(biblioteca.buscarLibroPorTitulo(titulo,biblioteca.obtenerCatalogo())==null){
-            if(biblioAux.buscarLibroPorTitulo(titulo,biblioAux.obtenerCatalogo())==null){
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
-    public boolean searchSede(String sede){
-        if(biblioteca.buscarLibroPorSede(sede,biblioteca.obtenerCatalogo())==null){
-            if(biblioAux.buscarLibroPorSede(sede,biblioAux.obtenerCatalogo())==null){
-                return false;
-            }
-            return true;
-        }
-        return true;
-    }
-
     public boolean existCode(){
         return exist;
     }
