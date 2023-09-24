@@ -9,7 +9,10 @@ public class Controller{
     private boolean exist;
     private Arbol arbol;
     private Biblioteca biblioteca;
+
+    private Biblioteca biblioAux;
     public Controller(){
+        this.biblioAux = new Biblioteca();
         this.view= new View();
         this.arbol=new Arbol();
         this.biblioteca= new Biblioteca();
@@ -54,6 +57,10 @@ public class Controller{
             view.addDateTable(libro.getISBN(), libro.getTitulo(), libro.getVolumen(), view.getEditorial(),autorLibro,
                     autor1.getDescripcion(),sede.getSede_libro(),sede.getCampus_libro() );
         }
+    }
+
+    public void deleteData(){
+
     }
 
     public boolean existCode(){

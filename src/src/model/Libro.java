@@ -86,7 +86,7 @@ public class Libro {
         }
         return false;
     }
-    public int buscarLibroIgualExcepto(Map<Integer, Libro> otrosLibros) {
+    public int buscarLibroIgual(Map<Integer, Libro> otrosLibros) {
         if (otrosLibros == null || otrosLibros.isEmpty()) {
             return -1;
         }
