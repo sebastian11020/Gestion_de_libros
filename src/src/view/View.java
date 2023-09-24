@@ -19,6 +19,7 @@ public class View {
     private String sede;
     private String facultad;
     private JFrame frame = new JFrame("Sistema gestor de libros");
+    private DefaultTableModel model = new DefaultTableModel();
     private  JButton crear = new JButton("Crear Libro");
     private  JButton mostar = new JButton("Mostrar Libros");
     private  JPanel panelMenu = new JPanel();
@@ -104,9 +105,9 @@ public class View {
         });
         frame.repaint();
     }
-
     public void showFrameList(){
         JPanel panelTitulo = new JPanel();
+        JPanel panelTabla = new JPanel();
         JLabel titulo = new JLabel("Mostrar libros");
         JButton mostrarTodos= new JButton("Mostrar todos los libros");
         JButton mostrarPorSede = new JButton("Mostar libros por sede");
@@ -120,13 +121,57 @@ public class View {
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
         frame.revalidate();
+        mostrarTodos.addActionListener(e-> {
+            frame.setSize(600,500);
+            frame.setResizable(true);
+            panelMenu.removeAll();
+            panelMenu.add(volver);
+            model.addColumn("Codigo ISBN");
+            model.addColumn("Titulo");
+            model.addColumn("Volumen");
+            model.addColumn("Editorial");
+            model.addColumn("Autor");
+            model.addColumn("Descripcion del autor");
+            model.addColumn("Sede");
+            model.addColumn("Facultad");
+            controller.mostrarTodo();
+            JTable table = new JTable(model);
+            JScrollPane scrollPane = new JScrollPane(table);
+            panelTabla.add(scrollPane);
+            frame.getContentPane().add(BorderLayout.CENTER,panelTabla);
+            frame.getContentPane().add(BorderLayout.SOUTH,panelMenu);
+            frame.revalidate();
+        });
+        mostrarPorSede.addActionListener(e->{
+            selectSede();
+        });
         volver.addActionListener(e->{
             frame.getContentPane().removeAll();
             panelMenu.removeAll();
             showFrameMenu();
         });
-        mostrarTodos.addActionListener(e->{
+    }
+    public void addDateTable(int codigo,String titulo_libro,int volumen,String editorial,String autor,String descripcion,
+                             String sede,String facultad){
+        model.addRow(new Object[]{codigo,titulo_libro,volumen,editorial,autor,descripcion,sede,facultad});
+    }
+    public void selectSede(){
+        String[] sedes = {"Duitama", "Sogamoso", "Tunja","Chiquinquira","Aguazul"};
+        JLabel label = new JLabel("Elige una sede");
+        JComboBox<String> sedeComboBox = new JComboBox<>(sedes);
+        JButton volver = new JButton("Volver");
+        panelMenu.removeAll();
+        panelMenu.add(label);
+        panelMenu.add(sedeComboBox);
+        volver.addActionListener(e->{
+            frame.getContentPane().removeAll();
+            panelMenu.removeAll();
+            showFrameList();
         });
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
+        frame.revalidate();
+
     }
     public  boolean esNumero(String str) {
         try {
