@@ -14,6 +14,28 @@ public class Biblioteca {
     public Libro obtenerLibro(Integer clave) {
         return catalogo.get(clave);
     }
+    public Libro buscarLibroPorTitulo(String tituloBuscado, Map<Integer, Libro> libros) {
+        if (tituloBuscado == null || libros == null || libros.isEmpty()) {
+            return null;
+        }
+        for (Libro libro : libros.values()) {
+            if (tituloBuscado.equals(libro.getTitulo())) {
+                return libro;
+            }
+        }
+        return null;
+    }
+    public Libro buscarLibroPorSede(String sedeBuscada, Map<Integer, Libro> libros) {
+        if (sedeBuscada == null || libros == null || libros.isEmpty()) {
+            return null;
+        }
+        for (Libro libro : libros.values()) {
+            if (sedeBuscada.equals(libro.getSede())) {
+                return libro;
+            }
+        }
+        return null;
+    }
     public void eliminarLibro(Integer clave) {
         catalogo.remove(clave);
     }

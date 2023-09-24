@@ -81,6 +81,86 @@ public class Controller{
         view.showMessage("No se encontró un libro con el ISBN y sede especificados.");
     }
 
+    public boolean searchISBN(int codigo){
+        if(biblioteca.obtenerLibro(codigo)==null){
+            if(biblioAux.obtenerLibro(codigo)==null){
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+    public boolean searchTitle(String titulo){
+        if(biblioteca.buscarLibroPorTitulo(titulo,biblioteca.obtenerCatalogo())==null){
+            if(biblioAux.buscarLibroPorTitulo(titulo,biblioAux.obtenerCatalogo())==null){
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+    public boolean searchSede(String sede){
+        if(biblioteca.buscarLibroPorSede(sede,biblioteca.obtenerCatalogo())==null){
+            if(biblioAux.buscarLibroPorSede(sede,biblioAux.obtenerCatalogo())==null){
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+
+    public void searchISBNSede(int codigo, String sede){
+        if(searchISBN(codigo)==true&&searchSede(sede)==true){
+            if(biblioteca.obtenerLibro(codigo)==null){
+                view.addDateTable(biblioteca.obtenerLibro(codigo).getISBN(),
+                        biblioteca.obtenerLibro(codigo).getTitulo(),
+                        biblioteca.obtenerLibro(codigo).getVolumen(),
+                        biblioteca.obtenerLibro(codigo).getEditorial(),
+                        biblioteca.obtenerLibro(codigo).getAutor().getNombre()+""+biblioteca.obtenerLibro(view.getCodigo()).getAutor().getApellido(),
+                        biblioteca.obtenerLibro(codigo).getAutor().getDescripcion(),
+                        biblioteca.obtenerLibro(codigo).getSede().getSede_libro(),
+                        biblioteca.obtenerLibro(codigo).getSede().getCampus_libro(),
+                        biblioteca.obtenerLibro(codigo).getCantidad());
+            }
+        }else{
+            view.showMessage("El libro buscado no esta en el sistema");
+        }
+    }
+    public void searchTitleSede(String titulo, String sede){
+        if(searchTitle(titulo)==true&&searchSede(sede)==true){
+            if(biblioteca.buscarLibroPorTitulo(titulo,biblioteca.obtenerCatalogo())==null){
+                view.addDateTable( biblioteca.buscarLibroPorTitulo(titulo,biblioteca.obtenerCatalogo()).getISBN(),
+                biblioteca.buscarLibroPorTitulo(titulo,biblioteca.obtenerCatalogo()).getTitulo(),
+                biblioteca.buscarLibroPorTitulo(titulo,biblioteca.obtenerCatalogo()).getVolumen(),
+                biblioteca.buscarLibroPorSede(titulo, biblioteca.obtenerCatalogo()).getEditorial(),
+                biblioteca.buscarLibroPorTitulo(titulo,biblioteca.obtenerCatalogo()).getAutor().getNombre()+""+biblioteca.buscarLibroPorTitulo(titulo,biblioteca.obtenerCatalogo()).getAutor().getApellido(),
+                biblioteca.buscarLibroPorTitulo(titulo,biblioteca.obtenerCatalogo()).getAutor().getDescripcion(),
+                biblioteca.buscarLibroPorTitulo(titulo, biblioteca.obtenerCatalogo()).getSede().getSede_libro(),
+                biblioteca.buscarLibroPorTitulo(titulo, biblioteca.obtenerCatalogo()).getSede().getCampus_libro(),
+                biblioteca.buscarLibroPorTitulo(titulo, biblioteca.obtenerCatalogo()).getCantidad());
+            }
+        }else{
+            view.showMessage("El libro buscado no esta en el sistema");
+        }
+    }
+    public void searchISBNTitle(int codigo, String titulo){
+        if(searchISBN(codigo)==true&&searchTitle(titulo)==true){
+            if(biblioteca.obtenerLibro(codigo)==null){
+                view.addDateTable(biblioteca.obtenerLibro(codigo).getISBN(),
+                biblioteca.obtenerLibro(codigo).getTitulo(),
+                biblioteca.obtenerLibro(codigo).getVolumen(),
+                biblioteca.obtenerLibro(codigo).getEditorial(),
+                biblioteca.obtenerLibro(codigo).getAutor().getNombre()+""+biblioteca.obtenerLibro(view.getCodigo()).getAutor().getApellido(),
+                        biblioteca.obtenerLibro(codigo).getAutor().getDescripcion(),
+                        biblioteca.obtenerLibro(codigo).getSede().getSede_libro(),
+                        biblioteca.obtenerLibro(codigo).getSede().getCampus_libro(),
+                        biblioteca.obtenerLibro(codigo).getCantidad());
+            }
+        }else{
+            view.showMessage("El libro buscado no esta en el sistema");
+        }
+    }
+
     public boolean existCode(){
         return exist;
     }

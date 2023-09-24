@@ -2,10 +2,6 @@ package view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
-import model.Libro;
-
 import controller.Controller;
 public class View {
     private Controller controller;
@@ -24,6 +20,7 @@ public class View {
     private DefaultTableModel model = new DefaultTableModel();
     private  JButton crear = new JButton("Crear Libro");
     private  JButton mostar = new JButton("Mostrar Libros");
+    private  JButton buscar = new JButton("Buscar Libro");
     private  JPanel panelMenu = new JPanel();
     public void showFrameMenu() {
         JLabel titulo = new JLabel("Sistema gestor de libros");
@@ -36,6 +33,7 @@ public class View {
         panelMenu.add(crear);
         panelMenu.add(mostar);
         panelMenu.add(eliminarLibro);
+        panelMenu.add(buscar);
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
         crear.addActionListener(e -> {
@@ -48,6 +46,11 @@ public class View {
         eliminarLibro.addActionListener(e->{
             showFrameDelete();
         });
+
+        buscar.addActionListener(e->{
+            showFrameSearch();
+        });
+
         frame.setVisible(true);
     }
 
@@ -91,22 +94,22 @@ public class View {
         });
         agregarAutor.addActionListener(e->{
             if(!esNuloOVacio(datoTitulo.getText())&&!esNuloOVacio(datoEditorial.getText())){
-               if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())&&esNumero(datoCopias.getText())){
-                setTituloLibro(datoTitulo.getText());
-                if(Integer.parseInt(datoCodigo.getText())>0 && Integer.parseInt(datoVolumen.getText())>0&& Integer.parseInt(datoCopias.getText())>0) {
-                    setCodigo(datoCodigo.getText());
-                    setVolumen(datoVolumen.getText());
-                    setEditorial(datoEditorial.getText());
-                    setCopias(datoCopias.getText());
-                    if (controller != null) {
-                        controller.addCode();
+                if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())&&esNumero(datoCopias.getText())){
+                    setTituloLibro(datoTitulo.getText());
+                    if(Integer.parseInt(datoCodigo.getText())>0 && Integer.parseInt(datoVolumen.getText())>0&& Integer.parseInt(datoCopias.getText())>0) {
+                        setCodigo(datoCodigo.getText());
+                        setVolumen(datoVolumen.getText());
+                        setEditorial(datoEditorial.getText());
+                        setCopias(datoCopias.getText());
+                        if (controller != null) {
+                            controller.addCode();
+                        }
+                        if(!controller.existCode()) {
+                            agregarAutorySede();
+                        }
+                    }else {
+                        JOptionPane.showMessageDialog(null,"El codigo o el volumen no puede ser menor a 0");
                     }
-                    if(!controller.existCode()) {
-                        agregarAutorySede();
-                    }
-                }else {
-                    JOptionPane.showMessageDialog(null,"El codigo o el volumen no puede ser menor a 0");
-                }
                 }else {
                     JOptionPane.showMessageDialog(null,"El codigo o el volumen no son validos");
                 }
@@ -166,6 +169,61 @@ public class View {
             showTable();
         });
     }
+
+    public void showFrameSearch(){
+        JPanel panelTitulo = new JPanel();
+        JPanel panelTabla = new JPanel();
+        JLabel titulo = new JLabel("Buscar Libro");
+        JLabel tituloLibro = new JLabel("Titulo");
+        JTextField datoTitulo = new JTextField(10);
+        JLabel codigoLibro = new JLabel("Codigo ISBN");
+        JTextField datoCodigo = new JTextField(10);
+        JLabel sedeLabel = new JLabel("Sede:");
+        JComboBox<String> sedeComboBox = new JComboBox<>(new String[]{"Duitama", "Sogamoso", "Tunja", "Chiquinquira", "Aguazul"});
+        JButton buscarButton = new JButton("Buscar");
+        JButton volverButton = new JButton("Volver");
+
+        panelMenu.removeAll();
+        panelMenu.add(tituloLibro);
+        panelMenu.add(datoTitulo);
+        panelMenu.add(codigoLibro);
+        panelMenu.add(datoCodigo);
+        panelMenu.add(sedeLabel);
+        panelMenu.add(sedeComboBox);
+        panelMenu.add(buscarButton);
+        panelMenu.add(volverButton);
+
+        panelTitulo.add(titulo);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
+        frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
+        frame.revalidate();
+
+        volverButton.addActionListener(e -> {
+            frame.getContentPane().removeAll();
+            panelMenu.removeAll();
+            showFrameMenu();
+        });
+
+        buscarButton.addActionListener(e -> {
+            String codigo = datoCodigo.getText();
+            String titulo_ = datoTitulo.getText();
+            String sede = (String) sedeComboBox.getSelectedItem();
+            int isbn = Integer.parseInt(codigo);
+            if (sede==null) {
+                controller.searchISBNTitle(isbn, titulo_);
+            } else if (titulo_ == null) {
+                controller.searchISBNSede(isbn, sede);
+            } else if (isbn == 0) {
+                controller.searchTitleSede(titulo_,sede);
+            }else{
+                controller.searchISBNTitle(isbn, titulo_);
+            }
+            frame.getContentPane().removeAll();
+            showTable();
+        });
+    }
+
     public void showFrameList(){
         JPanel panelTitulo = new JPanel();
         JLabel titulo = new JLabel("Mostrar libros");
@@ -274,29 +332,29 @@ public class View {
             showFrameCreate();
         });
         sedeComboBox.addActionListener(e->{
-                String selectedSede = (String) sedeComboBox.getSelectedItem();
-                sede[0] = selectedSede;
-                if ("Duitama".equals(selectedSede)) {
-                    String[] facultadesSedeA = {"Seccional Duitama"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeA));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                } else if ("Sogamoso".equals(selectedSede)) {
-                    String[] facultadesSedeB = {"Seccional Sogamoso"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeB));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                } else if ("Tunja".equals(selectedSede)) {
-                    String[] facultadesSedeC = {"Biblioteca Central","Facultad Ingenieria", "Facultad Medicina", "Facultad Derecho y Ciencias Sociales","FESAD"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                } else if ("Chiquinquira".equals(selectedSede)) {
-                    String[] facultadesSedeC = {"Seccional Chiquinquira"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                } else if ("Aguazul".equals(selectedSede)) {
-                    String[] facultadesSedeC = {"Seccional Aguazul"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                }
+            String selectedSede = (String) sedeComboBox.getSelectedItem();
+            sede[0] = selectedSede;
+            if ("Duitama".equals(selectedSede)) {
+                String[] facultadesSedeA = {"Seccional Duitama"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeA));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            } else if ("Sogamoso".equals(selectedSede)) {
+                String[] facultadesSedeB = {"Seccional Sogamoso"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeB));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            } else if ("Tunja".equals(selectedSede)) {
+                String[] facultadesSedeC = {"Biblioteca Central","Facultad Ingenieria", "Facultad Medicina", "Facultad Derecho y Ciencias Sociales","FESAD"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            } else if ("Chiquinquira".equals(selectedSede)) {
+                String[] facultadesSedeC = {"Seccional Chiquinquira"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            } else if ("Aguazul".equals(selectedSede)) {
+                String[] facultadesSedeC = {"Seccional Aguazul"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            }
         });
         frame.getContentPane().removeAll();
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
