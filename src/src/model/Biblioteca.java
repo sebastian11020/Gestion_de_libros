@@ -3,9 +3,20 @@ import java.util.HashMap;
 import java.util.Map;
 public class Biblioteca {
     private Map<Integer, Libro> catalogo;
-
+    private Map<Integer,Libro> inorden;
+    private String titulo;
+    private int codigo;
+    private int volumen;
+    private String editorial;
+    private String nombre;
+    private String apellido;
+    private String descripsion;
+    private String sede;
+    private String facultad;
+    private int copias;
     public Biblioteca() {
         catalogo = new HashMap<>();
+        inorden=new HashMap<>();
     }
     public void agregarLibro(Integer clave, Libro libro) {
         catalogo.put(clave, libro);
@@ -22,27 +33,12 @@ public class Biblioteca {
     public void mostrarDatosLibro(Integer clave) {
         Libro libro = obtenerLibro(clave);
         if (libro != null) {
-            System.out.println("Datos del Libro:");
-            System.out.println("Título: " + libro.getTitulo());
-            System.out.println("ISBN: " + libro.getISBN());
-            System.out.println("Volumen: " + libro.getVolumen());
-            System.out.println("Editorial: " + libro.getEditorial());
-            Autor autor = libro.getAutor();
-            System.out.println("Autor: " + autor.getNombre() + " " + autor.getApellido());
-            System.out.println("Descripción del Autor: " + autor.getDescripcion());
-            Sede sede = libro.getSede();
-            System.out.println("Sede del Libro: " + sede.getSede_libro());
-            System.out.println("Campus del Libro: " + sede.getCampus_libro());
-            System.out.println("Cantidad de Copias Disponibles: " + libro.getCantidad());
+            inorden.put(clave,libro);
         } else {
             System.out.println("El libro con clave " + clave + " no existe en la biblioteca.");
         }
     }
-    public void mostrarTodosLosLibros() {
-        System.out.println("Lista de Todos los Libros en la Biblioteca:");
-        for (Map.Entry<Integer, Libro> entry : catalogo.entrySet()) {
-            System.out.println("\nClave: " + entry.getKey());
-            mostrarDatosLibro(entry.getKey());
-        }
+    public Map<Integer,Libro> getInorden(){
+        return inorden;
     }
 }
