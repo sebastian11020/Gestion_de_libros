@@ -70,6 +70,7 @@ public class Controller{
                 }
                 if (libro.getCantidad() <= 0) {
                     biblioteca.eliminarLibro(clave);
+                    arbol.eliminar(isbn);
                     view.showMessage("Libro eliminado con éxito");
                 } else {
                     view.showMessage("Se eliminó una copia del libro");

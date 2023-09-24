@@ -131,4 +131,45 @@ public class Arbol {
     public void inorden(Biblioteca biblioteca) {
         this.inorden(this.raiz,biblioteca);
     }
+    public void eliminar(int busqueda) {
+        this.raiz = this.eliminar(this.raiz, busqueda);
+    }
+
+    private Nodo eliminar(Nodo nodo, int busqueda) {
+        if (nodo == null) {
+            return nodo;
+        }
+        if (busqueda > nodo.getCodigo()) {
+            nodo.setDerecha(this.eliminar(nodo.getDerecha(), busqueda));
+        } else if (busqueda < nodo.getCodigo()) {
+            nodo.setIzquierda(this.eliminar(nodo.getIzquierda(), busqueda));
+        } else {
+            if (nodo.getIzquierda() == null && nodo.getDerecha() == null) {
+                nodo = null;
+            } else if (nodo.getDerecha() != null) {
+                nodo.setDato(this.sucesor(nodo));
+                nodo.setDerecha(this.eliminar(nodo.getDerecha(), nodo.getCodigo()));
+            } else {
+                nodo.setDato(this.predecesor(nodo));
+                nodo.setIzquierda(this.eliminar(nodo.getIzquierda(), nodo.getCodigo()));
+            }
+        }
+        return nodo;
+    }
+
+    private int sucesor(Nodo nodo) {
+        nodo = nodo.getDerecha();
+        while (nodo.getIzquierda() != null) {
+            nodo = nodo.getIzquierda();
+        }
+        return nodo.getCodigo();
+    }
+
+    private int predecesor(Nodo nodo) {
+        nodo = nodo.getIzquierda();
+        while (nodo.getDerecha() != null) {
+            nodo = nodo.getDerecha();
+        }
+        return nodo.getCodigo();
+    }
 }

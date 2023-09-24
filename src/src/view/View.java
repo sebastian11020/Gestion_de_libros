@@ -191,9 +191,17 @@ public class View {
             showFrameMenu();
         });
         mostrarTodos.addActionListener(e-> {
-            frame.getContentPane().removeAll();
-            setCodigo(isbnTextField.getText());
-            showTableSearch();
+            if(esNumero(isbnTextField.getText())){
+                if(Integer.parseInt(isbnTextField.getText())>=0){
+                frame.getContentPane().removeAll();
+                setCodigo(isbnTextField.getText());
+                showTableSearch();
+                }else{
+                    showMessage("El numero debe ser positivo");
+                }
+            }else{
+                showMessage("Debe ingresar un codigo valido");
+            }
         });
     }
 

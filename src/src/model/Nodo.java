@@ -26,6 +26,10 @@ public class Nodo {
     public int getAltura() { return altura;}
     public void setAltura(int altura) {this.altura = altura;}
 
+    public void setDato(int dato) {
+        this.codigo = dato;
+    }
+
     public void imprimirCodigo() {
         System.out.println(this.getCodigo());
     }
