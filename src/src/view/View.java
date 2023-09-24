@@ -274,6 +274,11 @@ public class View {
                 setSede(sede[0]);
                 setFacultad(selectedFacu[0]);
                 controller.addData();
+                showMessage("Agregado con exito");
+                datoNombre.setText("");
+                datoApellido.setText("");
+                textArea.setText("");
+
             }else {
                 JOptionPane.showMessageDialog(null,"No pueden haber campos vacios o sin seleccionar");
             }
