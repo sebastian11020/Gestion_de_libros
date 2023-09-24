@@ -67,11 +67,11 @@ public class View {
         panelMenu.add(editorialLibro);
         panelMenu.add(datoEditorial);
         panelMenu.add(agregarAutor);
-        panelMenu.add(volver);
         panelTitulo.add(titulo);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
+        frame.getContentPane().add(BorderLayout.SOUTH, volver);
         frame.revalidate();
         volver.addActionListener(e->{
             frame.getContentPane().removeAll();
@@ -108,22 +108,18 @@ public class View {
         JPanel panelTitulo = new JPanel();
         JLabel titulo = new JLabel("Mostrar libros");
         JButton mostrarTodos= new JButton("Mostrar todos los libros");
-        JButton mostrarPorSede = new JButton("Mostar libros por sede");
         JButton volver = new JButton("Volver");
         panelTitulo.add(titulo);
         panelMenu.removeAll();
         panelMenu.add(mostrarTodos);
-        panelMenu.add(mostrarPorSede);
-        panelMenu.add(volver);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
+        frame.getContentPane().add(BorderLayout.SOUTH, volver);
         frame.revalidate();
         mostrarTodos.addActionListener(e-> {
+            frame.getContentPane().removeAll();
             showTable();
-        });
-        mostrarPorSede.addActionListener(e->{
-            selectSede();
         });
         volver.addActionListener(e->{
             frame.getContentPane().removeAll();
@@ -140,7 +136,6 @@ public class View {
         frame.setSize(600,500);
         frame.setResizable(true);
         panelMenu.removeAll();
-        panelMenu.add(volver);
         model.addColumn("Codigo ISBN");
         model.addColumn("Titulo");
         model.addColumn("Volumen");
@@ -155,6 +150,7 @@ public class View {
         panelTabla.add(scrollPane);
         frame.getContentPane().add(BorderLayout.CENTER,panelTabla);
         frame.getContentPane().add(BorderLayout.SOUTH,panelMenu);
+        frame.getContentPane().add(BorderLayout.SOUTH, volver);
         frame.revalidate();
         volver.addActionListener(e->{
             frame.getContentPane().removeAll();
@@ -166,24 +162,6 @@ public class View {
     public void addDateTable(int codigo,String titulo_libro,int volumen,String editorial,String autor,String descripcion,
                              String sede,String facultad){
         model.addRow(new Object[]{codigo,titulo_libro,volumen,editorial,autor,descripcion,sede,facultad});
-    }
-    public void selectSede(){
-        String[] sedes = {"Duitama", "Sogamoso", "Tunja","Chiquinquira","Aguazul"};
-        JLabel label = new JLabel("Elige una sede");
-        JComboBox<String> sedeComboBox = new JComboBox<>(sedes);
-        JButton volver = new JButton("Volver");
-        panelMenu.removeAll();
-        panelMenu.add(label);
-        panelMenu.add(sedeComboBox);
-        volver.addActionListener(e->{
-            frame.getContentPane().removeAll();
-            panelMenu.removeAll();
-            showFrameList();
-        });
-        frame.getContentPane().removeAll();
-        frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
-        frame.revalidate();
-
     }
     public  boolean esNumero(String str) {
         try {
@@ -260,9 +238,9 @@ public class View {
         frame.getContentPane().removeAll();
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
+        frame.getContentPane().add(BorderLayout.SOUTH, volver);
         panelMenu.add(facultadComboBox);
         panelMenu.add(agregarBiblioteca);
-        panelMenu.add(volver);
         frame.revalidate();
         agregarBiblioteca.addActionListener(e-> {
             if (!esNuloOVacio(datoNombre.getText()) && !esNuloOVacio(datoApellido.getText())
