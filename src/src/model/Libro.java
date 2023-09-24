@@ -74,29 +74,6 @@ public class Libro {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    public Libro buscarLibroPorTitulo(String tituloBuscado, Map<Integer, Libro> libros) {
-        if (tituloBuscado == null || libros == null || libros.isEmpty()) {
-            return null; // Título nulo o HashMap vacío, no se puede realizar la búsqueda
-        }
 
-        for (Libro libro : libros.values()) {
-            if (tituloBuscado.equals(libro.getTitulo())) {
-                return libro; // Se encontró un libro con el título buscado
-            }
-        }
-
-        return null; // No se encontró ningún libro con el título buscado
-    }
-    public Libro buscarLibroPorSede(String sedeBuscada, Map<Integer, Libro> libros) {
-        if (sedeBuscada == null || libros == null || libros.isEmpty()) {
-            return null;
-        }
-        for (Libro libro : libros.values()) {
-            if (sedeBuscada.equals(libro.getSede())) {
-                return libro;
-            }
-        }
-        return null;
-    }
 
 }

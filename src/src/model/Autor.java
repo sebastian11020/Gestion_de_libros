@@ -35,34 +35,4 @@ public class Autor {
         this.descripcion = descripcion;
     }
 
-    public boolean sonIguales(Autor otroAutor) {
-        if (this == otroAutor) {
-            return true;
-        }
-        if (otroAutor == null) {
-            return false;
-        }
-        if (nombre == null) {
-            if (otroAutor.nombre != null) {
-                return false;
-            }
-        } else if (!nombre.equals(otroAutor.nombre)) {
-            return false;
-        }
-        if (apellido == null) {
-            if (otroAutor.apellido != null) {
-                return false;
-            }
-        } else if (!apellido.equals(otroAutor.apellido)) {
-            return false;
-        }
-        if (descripcion == null) {
-            if (otroAutor.descripcion != null) {
-                return false;
-            }
-        } else if (!descripcion.equals(otroAutor.descripcion)) {
-            return false;
-        }
-        return true;
-    }
 }
