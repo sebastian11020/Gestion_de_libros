@@ -19,6 +19,7 @@ public class View {
     private String sede;
     private String facultad;
     private JFrame frame = new JFrame("Sistema gestor de libros");
+    private JButton eliminarLibro = new JButton("Eliminar Libro");
     private DefaultTableModel model = new DefaultTableModel();
     private  JButton crear = new JButton("Crear Libro");
     private  JButton mostar = new JButton("Mostrar Libros");
@@ -34,6 +35,7 @@ public class View {
         panelTitulo.add(titulo);
         panelMenu.add(crear);
         panelMenu.add(mostar);
+        panelMenu.add(eliminarLibro);
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
         frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
         crear.addActionListener(e -> {
@@ -41,6 +43,10 @@ public class View {
         });
         mostar.addActionListener(e->{
             showFrameList();
+        });
+
+        eliminarLibro.addActionListener(e->{
+            showFrameDelete();
         });
         frame.setVisible(true);
     }
@@ -104,6 +110,49 @@ public class View {
             }
         });
         frame.repaint();
+    }
+
+    public void showFrameDelete() {
+        JPanel panelTitulo = new JPanel();
+        JLabel titulo = new JLabel("Eliminar libro");
+        JLabel isbnLabel = new JLabel("ISBN:");
+        JTextField isbnTextField = new JTextField(10);
+        JLabel sedeLabel = new JLabel("Sede:");
+        JComboBox<String> sedeComboBox = new JComboBox<>(new String[]{"Duitama", "Sogamoso", "Tunja", "Chiquinquira", "Aguazul"});
+        JButton eliminarButton = new JButton("Eliminar");
+        JButton volverButton = new JButton("Volver");
+
+        panelMenu.removeAll();
+        panelMenu.add(isbnLabel);
+        panelMenu.add(isbnTextField);
+        panelMenu.add(sedeLabel);
+        panelMenu.add(sedeComboBox);
+        panelMenu.add(eliminarButton);
+        panelMenu.add(volverButton);
+
+        panelTitulo.add(titulo);
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
+        frame.getContentPane().add(BorderLayout.CENTER, panelMenu);
+        frame.revalidate();
+
+        volverButton.addActionListener(e -> {
+            frame.getContentPane().removeAll();
+            panelMenu.removeAll();
+            showFrameMenu();
+        });
+
+        eliminarButton.addActionListener(e -> {
+            String isbnText = isbnTextField.getText();
+            String selectedSede = (String) sedeComboBox.getSelectedItem();
+
+            if (esNumero(isbnText) && !esNuloOVacio(selectedSede)) {
+                int isbn = Integer.parseInt(isbnText);
+                controller.deleteData(isbn, selectedSede);
+            } else {
+                showMessage("Por favor, complete los campos correctamente.");
+            }
+        });
     }
     public void showFrameList(){
         JPanel panelTitulo = new JPanel();

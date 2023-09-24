@@ -49,7 +49,7 @@ public class Controller{
                 biblioteca.eliminarLibro(view.getCodigo());
             }
         }
-        biblioteca.mostrarTodosLosLibros();
+
     }
     public void mostrarTodo(){
         arbol.inorden(biblioteca);
@@ -68,8 +68,19 @@ public class Controller{
         }
     }
 
-    public void deleteData(){
+    public void deleteData(int isbn, String sede) {
+        for (Map.Entry<Integer, Libro> entry : biblioteca.obtenerCatalogo().entrySet()) {
+            int clave = entry.getKey();
+            Libro libro = entry.getValue();
+            if (libro.getISBN() == isbn && libro.getSede().getSede_libro().equals(sede)) {
 
+                biblioteca.eliminarLibro(clave);
+                view.showMessage("Libro eliminado con exito");
+                return;
+            }
+        }
+
+        view.showMessage("No se encontró un libro con el ISBN y sede especificados.");
     }
 
     public boolean existCode(){
