@@ -40,16 +40,17 @@ public class View {
         crear.addActionListener(e -> {
             showFrameCreate();
         });
-        mostar.addActionListener(e->{
+        mostar.addActionListener(e -> {
             showFrameList();
         });
 
-        eliminarLibro.addActionListener(e->{
+        eliminarLibro.addActionListener(e -> {
             showFrameDelete();
         });
-        buscar.addActionListener(e->{
+        buscar.addActionListener(e -> {
             showFrameSearch();
         });
+    }
     public void showFrameCreate() {
         JPanel panelTitulo = new JPanel();
         JLabel titulo = new JLabel("Agregar libro");
