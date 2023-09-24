@@ -50,6 +50,7 @@ public class View {
         buscar.addActionListener(e -> {
             showFrameSearch();
         });
+        frame.setVisible(true);
     }
     public void showFrameCreate() {
         JPanel panelTitulo = new JPanel();
