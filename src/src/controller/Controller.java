@@ -37,7 +37,7 @@ public class Controller{
                 new Sede(view.getSede(), view.getFacultad()),1);
         biblioteca.agregarLibro(view.getCodigo(), libro);
         if(!libro.alMenosUnoIgual(biblioteca.obtenerCatalogo())){
-            int value = libro.buscarLibroIgualExcepto(biblioteca.obtenerCatalogo());
+            int value = libro.buscarLibroIgual(biblioteca.obtenerCatalogo());
             biblioteca.obtenerLibro(value).setCantidad(libro.getCantidad()+1);
             biblioteca.eliminarLibro(view.getCodigo());
         }
