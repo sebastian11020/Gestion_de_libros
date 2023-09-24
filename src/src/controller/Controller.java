@@ -80,6 +80,29 @@ public class Controller{
         }
         view.showMessage("No se encontró un libro con el ISBN y sede especificados.");
     }
+    public void buscar() {
+        Map<Integer, Libro> map = biblioteca.getLibro(view.getCodigo());
+        Libro libroEncontrado = null;
+        for (Map.Entry<Integer, Libro> entry : map.entrySet()) {
+            if (entry.getKey() == view.getCodigo()) {
+                libroEncontrado = entry.getValue();
+                break;
+            }
+        }
+        if (libroEncontrado != null) {
+            System.out.println(libroEncontrado.getTitulo());
+            Autor autor1 = libroEncontrado.getAutor();
+            Sede sede = libroEncontrado.getSede();
+            String autorLibro;
+            StringBuilder autor = new StringBuilder();
+            autor.append(autor1.getNombre()).append(" ").append(autor1.getApellido());
+            autorLibro = String.valueOf(autor);
+            view.addDateTableSearch(libroEncontrado.getISBN(), libroEncontrado.getTitulo(), libroEncontrado.getVolumen(), view.getEditorial(), autorLibro,
+                    autor1.getDescripcion(), sede.getSede_libro(), sede.getCampus_libro(), libroEncontrado.getCantidad());
+        } else {
+            view.showMessage("Libro no encontrado");
+        }
+    }
 
     public boolean existCode(){
         return exist;
