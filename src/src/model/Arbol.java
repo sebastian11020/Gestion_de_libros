@@ -121,14 +121,14 @@ public class Arbol {
 
         return Math.abs(balance) <= 1 && estaBalanceado(nodo.getIzquierda()) && estaBalanceado(nodo.getDerecha());
     }
-    private void inorden(Nodo n) {
+    private void inorden(Nodo n,Biblioteca biblioteca) {
         if (n != null) {
-            inorden(n.getIzquierda());
-            n.imprimirCodigo();   //aqui se obtiene el dato
-            inorden(n.getDerecha());
+            inorden(n.getIzquierda(),biblioteca);
+            biblioteca.mostrarDatosLibro(n.getCodigo());
+            inorden(n.getDerecha(),biblioteca);
         }
     }
-    public void inorden() {
-        this.inorden(this.raiz);
+    public void inorden(Biblioteca biblioteca) {
+        this.inorden(this.raiz,biblioteca);
     }
 }

@@ -10,9 +10,6 @@ public class Libro {
     private String editorial;
     private Autor autor;
     private Sede sede;
-
-
-
     public Libro(String titulo, int ISBN, int volumen, String editorial, Autor autor,
                  Sede sede, int cantidad) {
         this.titulo = titulo;

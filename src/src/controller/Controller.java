@@ -42,6 +42,22 @@ public class Controller{
             biblioteca.eliminarLibro(view.getCodigo());
         }
     }
+    public void mostrarTodo(){
+        arbol.inorden(biblioteca);
+        Map<Integer,Libro> map = biblioteca.getInorden();
+        for (Map.Entry<Integer, Libro> entry : map.entrySet()) {
+            int codigo = entry.getKey();
+            Libro libro = entry.getValue();
+            Autor autor1 = libro.getAutor();
+            Sede sede = libro.getSede();
+            String autorLibro;
+            StringBuilder autor = new StringBuilder();
+            autor.append(autor1.getNombre()).append(" ").append(autor1.getApellido());
+            autorLibro= String.valueOf(autor);
+            view.addDateTable(libro.getISBN(), libro.getTitulo(), libro.getVolumen(), view.getEditorial(),autorLibro,
+                    autor1.getDescripcion(),sede.getSede_libro(),sede.getCampus_libro() );
+        }
+    }
 
     public void deleteData(){
 
