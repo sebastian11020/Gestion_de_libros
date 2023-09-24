@@ -2,10 +2,6 @@ package view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
-import model.Libro;
-
 import controller.Controller;
 public class View {
     private Controller controller;
@@ -54,9 +50,6 @@ public class View {
         buscar.addActionListener(e->{
             showFrameSearch();
         });
-        frame.setVisible(true);
-    }
-
     public void showFrameCreate() {
         JPanel panelTitulo = new JPanel();
         JLabel titulo = new JLabel("Agregar libro");
@@ -97,22 +90,22 @@ public class View {
         });
         agregarAutor.addActionListener(e->{
             if(!esNuloOVacio(datoTitulo.getText())&&!esNuloOVacio(datoEditorial.getText())){
-               if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())&&esNumero(datoCopias.getText())){
-                setTituloLibro(datoTitulo.getText());
-                if(Integer.parseInt(datoCodigo.getText())>0 && Integer.parseInt(datoVolumen.getText())>0&& Integer.parseInt(datoCopias.getText())>0) {
-                    setCodigo(datoCodigo.getText());
-                    setVolumen(datoVolumen.getText());
-                    setEditorial(datoEditorial.getText());
-                    setCopias(datoCopias.getText());
-                    if (controller != null) {
-                        controller.addCode();
+                if(esNumero(datoCodigo.getText())&&esNumero(datoVolumen.getText())&&esNumero(datoCopias.getText())){
+                    setTituloLibro(datoTitulo.getText());
+                    if(Integer.parseInt(datoCodigo.getText())>0 && Integer.parseInt(datoVolumen.getText())>0&& Integer.parseInt(datoCopias.getText())>0) {
+                        setCodigo(datoCodigo.getText());
+                        setVolumen(datoVolumen.getText());
+                        setEditorial(datoEditorial.getText());
+                        setCopias(datoCopias.getText());
+                        if (controller != null) {
+                            controller.addCode();
+                        }
+                        if(!controller.existCode()) {
+                            agregarAutorySede();
+                        }
+                    }else {
+                        JOptionPane.showMessageDialog(null,"El codigo o el volumen no puede ser menor a 0");
                     }
-                    if(!controller.existCode()) {
-                        agregarAutorySede();
-                    }
-                }else {
-                    JOptionPane.showMessageDialog(null,"El codigo o el volumen no puede ser menor a 0");
-                }
                 }else {
                     JOptionPane.showMessageDialog(null,"El codigo o el volumen no son validos");
                 }
@@ -172,6 +165,7 @@ public class View {
             showTable();
         });
     }
+
     public void showFrameSearch() {
         JPanel panelTitulo = new JPanel();
         JLabel titulo = new JLabel("Buscar libros");
@@ -345,29 +339,29 @@ public class View {
             showFrameCreate();
         });
         sedeComboBox.addActionListener(e->{
-                String selectedSede = (String) sedeComboBox.getSelectedItem();
-                sede[0] = selectedSede;
-                if ("Duitama".equals(selectedSede)) {
-                    String[] facultadesSedeA = {"Seccional Duitama"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeA));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                } else if ("Sogamoso".equals(selectedSede)) {
-                    String[] facultadesSedeB = {"Seccional Sogamoso"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeB));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                } else if ("Tunja".equals(selectedSede)) {
-                    String[] facultadesSedeC = {"Biblioteca Central","Facultad Ingenieria", "Facultad Medicina", "Facultad Derecho y Ciencias Sociales","FESAD"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                } else if ("Chiquinquira".equals(selectedSede)) {
-                    String[] facultadesSedeC = {"Seccional Chiquinquira"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                } else if ("Aguazul".equals(selectedSede)) {
-                    String[] facultadesSedeC = {"Seccional Aguazul"};
-                    facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
-                    selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
-                }
+            String selectedSede = (String) sedeComboBox.getSelectedItem();
+            sede[0] = selectedSede;
+            if ("Duitama".equals(selectedSede)) {
+                String[] facultadesSedeA = {"Seccional Duitama"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeA));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            } else if ("Sogamoso".equals(selectedSede)) {
+                String[] facultadesSedeB = {"Seccional Sogamoso"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeB));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            } else if ("Tunja".equals(selectedSede)) {
+                String[] facultadesSedeC = {"Biblioteca Central","Facultad Ingenieria", "Facultad Medicina", "Facultad Derecho y Ciencias Sociales","FESAD"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            } else if ("Chiquinquira".equals(selectedSede)) {
+                String[] facultadesSedeC = {"Seccional Chiquinquira"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            } else if ("Aguazul".equals(selectedSede)) {
+                String[] facultadesSedeC = {"Seccional Aguazul"};
+                facultadComboBox.setModel(new DefaultComboBoxModel<>(facultadesSedeC));
+                selectedFacu[0] = (String) facultadComboBox.getSelectedItem();
+            }
         });
         frame.getContentPane().removeAll();
         frame.getContentPane().add(BorderLayout.NORTH, panelTitulo);
