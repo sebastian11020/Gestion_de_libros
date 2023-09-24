@@ -8,6 +8,11 @@ public class Controller{
     private View view;
     private boolean exist;
     private Arbol arbol;
+
+    public Biblioteca getBiblioteca() {
+        return biblioteca;
+    }
+
     private Biblioteca biblioteca;
 
     private Biblioteca biblioAux;
@@ -31,6 +36,7 @@ public class Controller{
             exist=true;
         }
     }
+
     public void addData(){
         Libro libro = new Libro(view.getTitulo(), view.getCodigo(), view.getVolumen(), view.getEditorial(),
                 new Autor(view.getNombre(), view.getApellido(), view.getBio()),
@@ -59,8 +65,19 @@ public class Controller{
         }
     }
 
-    public void deleteData(){
+    public void deleteData(int isbn, String sede) {
+        for (Map.Entry<Integer, Libro> entry : biblioteca.obtenerCatalogo().entrySet()) {
+            int clave = entry.getKey();
+            Libro libro = entry.getValue();
+            if (libro.getISBN() == isbn && libro.getSede().getSede_libro().equals(sede)) {
 
+                biblioteca.eliminarLibro(clave);
+                view.showMessage("Libro eliminado con exito");
+                return;
+            }
+        }
+
+        view.showMessage("No se encontró un libro con el ISBN y sede especificados.");
     }
 
     public boolean existCode(){
