@@ -83,7 +83,6 @@ public class Controller{
                 return;
             }
         }
-
         view.showMessage("No se encontró un libro con el ISBN y sede especificados.");
     }
 
